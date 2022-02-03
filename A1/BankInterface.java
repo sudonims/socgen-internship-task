@@ -1,6 +1,7 @@
 package A1;
 
 import java.util.*;
+import java.io.*;
 
 class Bank {
 	Customer cust[];
@@ -61,74 +62,91 @@ public class BankInterface {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		Bank b = new Bank();
-		System.out.printf("Welcome to login page\n\n");
+		File file = new File("transactions.txt");
+		try {
+			file.createNewFile();
+			FileWriter writer = new FileWriter(file);
+			System.out.printf("Welcome to login page\n\n");
 
-		System.out.printf("enter Bank Account no\n");
-		String acc = sc.nextLine();
+			System.out.printf("enter Bank Account no\n");
+			String acc = sc.nextLine();
 
-		System.out.printf("enter password\n");
-		String pass = sc.nextLine();
+			System.out.printf("enter password\n");
+			String pass = sc.nextLine();
 
-		int num = b.checkAccountPass(acc, pass);
-		if (num != -1) {
-			int option = -1, amt;
-			Customer c = b.getCust(num);
-			while (option != 0) {
-				System.out
-						.printf(
-								"!! WELCOME TO INDIAN BANK !!\nEnter operation:\n1. Deopsit\n2. Withdraw\n3. Transfer\n0. Logout\n");
-				option = sc.nextInt();
+			int num = b.checkAccountPass(acc, pass);
+			if (num != -1) {
+				int option = -1, amt;
+				Customer c = b.getCust(num);
+				while (option != 0) {
+					System.out
+							.printf(
+									"!! WELCOME TO INDIAN BANK !!\nEnter operation:\n1. Deopsit\n2. Withdraw\n3. Transfer\n0. Logout\n");
+					option = sc.nextInt();
 
-				switch (option) {
-					case 1:
-						System.out.printf("enter the amount to deposit\n");
-						amt = sc.nextInt();
-						c.deposit(amt);
-						b.updateCust(c);
-						break;
-
-					case 2:
-						System.out.printf("enter the amount to withdraw\n");
-						amt = sc.nextInt();
-						c.withdraw(amt);
-						b.updateCust(c);
-						break;
-
-					case 3:
-						System.out.printf("Enter the otp\n");
-						String otp = generateOTP();
-						System.out.println(otp);
-
-						String otpEnter = sc.next();
-						if (otpEnter.equals(otp)) {
-							System.out.printf("OTP verified!!\n Enter amount and bank account to transfer money\n");
+					switch (option) {
+						case 1:
+							System.out.printf("enter the amount to deposit\n");
 							amt = sc.nextInt();
-							String receiverAcc = sc.next();
-							Customer receiver = b.getCust(receiverAcc);
-							if (receiver != null) {
-								c.withdraw(amt);
-								receiver.deposit(amt);
-								b.updateCust(c);
-								b.updateCust(receiver);
-								System.out.printf("amount %d transferred to bank account %s\n", amt, receiver.getAccountNumber());
+							c.deposit(amt);
+							b.updateCust(c);
+							writer.append("amount deposit transaction");
+							break;
+
+						case 2:
+							System.out.printf("enter the amount to withdraw\n");
+							amt = sc.nextInt();
+							c.withdraw(amt);
+							b.updateCust(c);
+							writer.append("amount withdraw transaction");
+
+							break;
+
+						case 3:
+							System.out.printf("Enter the otp\n");
+							String otp = generateOTP();
+							System.out.println(otp);
+
+							String otpEnter = sc.next();
+							if (otpEnter.equals(otp)) {
+								System.out.printf("OTP verified!!\n Enter amount and bank account to transfer money\n");
+								amt = sc.nextInt();
+								String receiverAcc = sc.next();
+								Customer receiver = b.getCust(receiverAcc);
+								if (receiver != null) {
+									c.withdraw(amt);
+									receiver.deposit(amt);
+									b.updateCust(c);
+									b.updateCust(receiver);
+									System.out.printf("amount %d transferred to bank account %s\n", amt, receiver.getAccountNumber());
+									writer.append("amount transfer transaction");
+								} else {
+									System.out.println("Receiver acc doesn't exist");
+									writer.append("Failed transfer transaction");
+								}
+							} else {
+								System.out.println("OTP Invalid");
+								writer.append("Failed transfer transaction");
 							}
-						} else {
-							System.out.println("OTP Invalid");
-						}
-						break;
+							break;
 
-					case 0:
-						break;
+						case 0:
+							System.out.println("Exited Successfully");
+							break;
 
-					case default:
-						System.out.println("Invalid Option. Choose Again");
-						break;
+						case default:
+							System.out.println("Invalid Option. Choose Again");
+							break;
+					}
 				}
+			} else {
+				System.out.printf("Invalid credentials\n");
 			}
-		} else {
-			System.out.printf("Invalid credentials\n");
-		}
 
-		sc.close();
+			sc.close();
+		} catch (IOException e) {
+			System.out.println("File couldn't be created/read");
+			System.out.println(e);
+		}
 	}
 }

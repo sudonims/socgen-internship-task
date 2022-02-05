@@ -29,7 +29,7 @@ public class Customer {
 	public boolean deposit(int amt) {
 		try {
 			this.balance += amt;
-			System.out.printf("Amount %d deposited success\n", amt);
+			System.out.printf("Amount %d deposited success\nBalance for %s: %d\n", amt, this.bankAccountNumber, this.balance);
 			return true;
 
 		} catch (Exception e) {
@@ -44,6 +44,8 @@ public class Customer {
 				throw new BalanceExceedException("Balance less than amount to withdraw");
 			}
 			this.balance -= amt;
+			System.out.printf("Balance for %s: %d\n", this.bankAccountNumber, this.balance);
+
 			return true;
 		} catch (BalanceExceedException e) {
 			System.out.println("Please enter valid amount");

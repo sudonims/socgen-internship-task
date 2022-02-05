@@ -90,7 +90,7 @@ public class BankInterface {
 							amt = sc.nextInt();
 							c.deposit(amt);
 							b.updateCust(c);
-							writer.append("amount deposit transaction");
+							writer.append("amount deposit transaction\n");
 							break;
 
 						case 2:
@@ -98,7 +98,7 @@ public class BankInterface {
 							amt = sc.nextInt();
 							c.withdraw(amt);
 							b.updateCust(c);
-							writer.append("amount withdraw transaction");
+							writer.append("amount withdraw transaction\n");
 
 							break;
 
@@ -119,14 +119,14 @@ public class BankInterface {
 									b.updateCust(c);
 									b.updateCust(receiver);
 									System.out.printf("amount %d transferred to bank account %s\n", amt, receiver.getAccountNumber());
-									writer.append("amount transfer transaction");
+									writer.append("amount transfer transaction\n");
 								} else {
 									System.out.println("Receiver acc doesn't exist");
-									writer.append("Failed transfer transaction");
+									writer.append("Failed transfer transaction\n");
 								}
 							} else {
 								System.out.println("OTP Invalid");
-								writer.append("Failed transfer transaction");
+								writer.append("Failed transfer transaction\n");
 							}
 							break;
 
@@ -139,6 +139,7 @@ public class BankInterface {
 							break;
 					}
 				}
+				writer.close();
 			} else {
 				System.out.printf("Invalid credentials\n");
 			}

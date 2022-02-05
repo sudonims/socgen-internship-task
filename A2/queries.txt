@@ -1,0 +1,2 @@
+create table user( userId int NOT NULL AUTO_INCREMENT, firstName varchar(20) NOT NULL, lastName varchar(20) NOT NULL, email varchar(20) NOT NULL, PRIMARY KEY (userId));
+alter table user add unique(email);

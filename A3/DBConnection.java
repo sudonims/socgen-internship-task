@@ -1,4 +1,4 @@
-package A3.A;
+package com.A3.A;
 
 import java.sql.*;
 

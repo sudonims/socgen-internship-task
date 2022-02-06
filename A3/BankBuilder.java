@@ -1,4 +1,4 @@
-package A3.B;
+package com.A3.B;
 
 public class BankBuilder {
 	public static void main(String[] args) {

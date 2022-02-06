@@ -1,8 +1,6 @@
 import java.sql.*;
 import java.util.Scanner;
 
-import javax.management.Query;
-
 public class User {
 	public static void main(String[] args) throws SQLException, ClassNotFoundException {
 		Scanner sc = new Scanner(System.in);
@@ -91,7 +89,7 @@ public class User {
 			}
 
 			connection.close();
-
+			sc.close();
 		} catch (
 
 		SQLException s) {

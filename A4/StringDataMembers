@@ -1,0 +1,11 @@
+private final byte java.lang.String.value
+private final byte java.lang.String.coder
+private int java.lang.String.hash
+private boolean java.lang.String.hashIsZero
+private static final long java.lang.String.serialVersionUID
+static final boolean java.lang.String.COMPACT_STRINGS
+private static final java.io.ObjectStreamField java.lang.String.serialPersistentFields
+private static final char java.lang.String.REPL
+public static final java.util.Comparator java.lang.String.CASE_INSENSITIVE_ORDER
+static final byte java.lang.String.LATIN1
+static final byte java.lang.String.UTF16
